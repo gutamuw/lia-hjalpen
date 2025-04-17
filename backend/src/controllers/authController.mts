@@ -21,11 +21,9 @@ export const registerUser = async (req: Request, res: Response) => {
       res.status(400).json({ message: "You must be at least 18 years old" });
     }
 
-    //hash password
     const salt = await bcrypt.genSaltSync(10);
     const hash = await bcrypt.hash(password, salt);
 
-    //post user to database
     const newUser = await User.create({
       name,
       email,
@@ -43,19 +41,16 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-//registerCompany
-
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   try {
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
       res.status(404).json({ message: "User not found" });
       return;
     }
-    // Check if password is correct
+
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
