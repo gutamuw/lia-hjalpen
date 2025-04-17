@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User.mjs";
+import Company from "../models/Company.mjs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -41,6 +42,37 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+//registerCompany
+export const registerCompany = async (req: Request, res: Response) => {
+  const { name, email, password, description, profileImage, website } =
+    req.body;
+
+  try {
+    if (!name || !email || !password) {
+      res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const salt = await bcrypt.genSaltSync(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    const newCompany = await Company.create({
+      name,
+      email,
+      password: hash,
+      description,
+      profileImage,
+      website,
+    });
+
+    res
+      .status(200)
+      .json({ message: "Company registered successfully", newCompany });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -72,6 +104,56 @@ export const loginUser = async (req: Request, res: Response) => {
       user: {
         name: user.name,
         email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("login");
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const loginCompany = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  try {
+    if (!email || !password) {
+      res.status(400).json({ message: "Missing required fields" });
+    }
+    const company = await Company.findOne({ email });
+    if (!company) {
+      res.status(404).json({ message: "Company not found" });
+      return;
+    }
+    const isPasswordValid = await bcrypt.compare(password, company.password);
+    if (!isPasswordValid) {
+      res.status(401).json({ message: "Invalid password" });
+      return;
+    }
+    const token = jwt.sign({ id: company._id }, "mysecretkey");
+
+    const currentDate = new Date();
+    currentDate.setHours(currentDate.getHours() + 1);
+
+    res.cookie("login", token, {
+      expires: currentDate,
+      httpOnly: true,
+    });
+
+    res.status(200).json({
+      message: "Login successful",
+      company: {
+        name: company.name,
+        email: company.email,
       },
     });
   } catch (error) {
