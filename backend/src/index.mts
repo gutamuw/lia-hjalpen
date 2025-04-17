@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import { registerUser } from "./controllers/authController.mjs";
+import { authRoutes } from "./routes/authRoutes.mjs";
 
 const app = express();
 app.use(express.json());
@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
   res.send("Hello from api!");
 });
 
-app.use("/", registerUser);
+app.use("/", authRoutes);
 
 app.listen(3000, () => {
   mongoose.connect(
