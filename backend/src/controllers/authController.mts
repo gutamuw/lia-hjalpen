@@ -4,7 +4,6 @@ import Company from "../models/Company.mjs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-//registerUser
 export const registerUser = async (req: Request, res: Response) => {
   const { name, email, password, age, description, profileImage, cvLink } =
     req.body;
@@ -12,17 +11,20 @@ export const registerUser = async (req: Request, res: Response) => {
   try {
     if (!name || !email || !password || !age) {
       res.status(400).json({ message: "Missing required fields" });
+      return;
     }
     if (password.length < 3) {
       res
         .status(400)
         .json({ message: "Password must be at least 3 characters" });
+      return;
     }
     if (age < 18) {
       res.status(400).json({ message: "You must be at least 18 years old" });
+      return;
     }
 
-    const salt = await bcrypt.genSaltSync(10);
+    const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
     const newUser = await User.create({
@@ -35,14 +37,13 @@ export const registerUser = async (req: Request, res: Response) => {
       cvLink,
     });
 
-    res.status(200).json({ message: "User registered successfully", newUser });
+    res.status(201).json({ message: "User registered successfully", newUser });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
-//registerCompany
 export const registerCompany = async (req: Request, res: Response) => {
   const { name, email, password, description, profileImage, website } =
     req.body;
@@ -50,9 +51,10 @@ export const registerCompany = async (req: Request, res: Response) => {
   try {
     if (!name || !email || !password) {
       res.status(400).json({ message: "Missing required fields" });
+      return;
     }
 
-    const salt = await bcrypt.genSaltSync(10);
+    const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
     const newCompany = await Company.create({
@@ -65,7 +67,7 @@ export const registerCompany = async (req: Request, res: Response) => {
     });
 
     res
-      .status(200)
+      .status(201)
       .json({ message: "Company registered successfully", newCompany });
   } catch (error) {
     console.error(error);
@@ -90,7 +92,7 @@ export const loginUser = async (req: Request, res: Response) => {
       return;
     }
 
-    const token = jwt.sign({ id: user._id }, "mysecretkey");
+    const token = jwt.sign({ id: user._id, role: "user" }, "mysecretkey");
     const currentDate = new Date();
     currentDate.setHours(currentDate.getHours() + 1);
 
@@ -112,7 +114,7 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-export const logoutUser = async (req: Request, res: Response) => {
+export const logout = async (req: Request, res: Response) => {
   try {
     res.clearCookie("login");
     res.status(200).json({ message: "Logout successful" });
@@ -128,6 +130,7 @@ export const loginCompany = async (req: Request, res: Response) => {
   try {
     if (!email || !password) {
       res.status(400).json({ message: "Missing required fields" });
+      return;
     }
     const company = await Company.findOne({ email });
     if (!company) {
@@ -139,7 +142,7 @@ export const loginCompany = async (req: Request, res: Response) => {
       res.status(401).json({ message: "Invalid password" });
       return;
     }
-    const token = jwt.sign({ id: company._id }, "mysecretkey");
+    const token = jwt.sign({ id: company._id, role: "company" }, "mysecretkey");
 
     const currentDate = new Date();
     currentDate.setHours(currentDate.getHours() + 1);

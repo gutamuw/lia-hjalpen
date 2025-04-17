@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   loginCompany,
   loginUser,
+  logout,
   registerCompany,
   registerUser,
 } from "../controllers/authController.mjs";
@@ -12,3 +13,4 @@ authRoutes.post("/register-user", registerUser);
 authRoutes.post("/register-company", registerCompany);
 authRoutes.post("/login-user", loginUser);
 authRoutes.post("/login-company", loginCompany);
+authRoutes.post("/logout", logout);
