@@ -43,8 +43,6 @@ export const createListing = async (req: AuthRequest, res: Response) => {
   }
 };
 
-//getAllListings
-
 export const getAllListings = async (req: Request, res: Response) => {
   try {
     const listings = await Listing.find();
@@ -61,4 +59,20 @@ export const getAllListings = async (req: Request, res: Response) => {
   }
 };
 
-//getListingById
+export const getListingById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      res.status(404).json({ message: "Listing not found" });
+      return;
+    }
+    res.status(200).json(listing);
+    return;
+  } catch (error) {
+    console.error("Error fetching listing:", error);
+    res.status(500).json({ message: "Internal server error" });
+    return;
+  }
+}
