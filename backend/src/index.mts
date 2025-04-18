@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { authRoutes } from "./routes/authRoutes.mjs";
 import cookieParser from "cookie-parser";
 import { listingRoutes } from "./routes/listingRoutes.mjs";
+import { userRoutes } from "./routes/userRoutes.mjs";
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 
 app.use("/", authRoutes);
 app.use("/listings", listingRoutes);
+app.use("/users", userRoutes)
 
 app.listen(3000, () => {
   mongoose.connect(

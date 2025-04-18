@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { auth } from "../middleware/auth.mjs";
-import {addFavorite} from "../controllers/userControllers.mjs";
+import {addFavorite, deleteFavorite, getAllFavorites} from "../controllers/userControllers.mjs";
 
-const userRoutes = Router();
+export const userRoutes = Router();
 
-userRoutes.post("/users/:id/favorites/:listingId", addFavorite);
+userRoutes.post("/favorites/:listingId", auth, addFavorite);
+userRoutes.get("/:id/favorites", auth, getAllFavorites);
+userRoutes.delete("/favorites/:listingId", auth, deleteFavorite);
