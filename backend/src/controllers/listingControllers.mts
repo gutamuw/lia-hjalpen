@@ -44,8 +44,6 @@ export const createListing = async (req: AuthRequest, res: Response) => {
 };
 
 export const getAllListings = async (req: Request, res: Response) => {
-  // should work for listings?category=frontend&type=remote, if not provided, return all listings
-  // also adding pagnation and limit
   const { category, type, page, limit } = req.query;
 
   const currentPage = Number(page) || 1;
