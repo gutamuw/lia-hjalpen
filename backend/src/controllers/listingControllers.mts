@@ -45,7 +45,13 @@ export const createListing = async (req: AuthRequest, res: Response) => {
 
 export const getAllListings = async (req: Request, res: Response) => {
   // should work for listings?category=frontend&type=remote, if not provided, return all listings
-  const { category, type } = req.query;
+  // also adding pagnation and limit
+  const { category, type, page, limit } = req.query;
+
+  const currentPage = Number(page) || 1;
+  const currentLimit = Number(limit) || 10;
+  const skip = (currentPage - 1) * currentLimit;
+
   try {
     const filter: any = {};
 
@@ -56,7 +62,7 @@ export const getAllListings = async (req: Request, res: Response) => {
       filter.type = type;
     }
 
-    const listings = await Listing.find(filter);
+    const listings = await Listing.find(filter).skip(skip).limit(currentLimit);
     if (listings.length === 0) {
       res.status(404).json({ message: "No listings found" });
       return;
