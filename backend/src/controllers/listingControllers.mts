@@ -44,12 +44,24 @@ export const createListing = async (req: AuthRequest, res: Response) => {
 };
 
 export const getAllListings = async (req: Request, res: Response) => {
+  // should work for listings?category=frontend&type=remote, if not provided, return all listings
+  const { category, type } = req.query;
   try {
-    const listings = await Listing.find();
-    if (!listings) {
+    const filter: any = {};
+
+    if (category) {
+      filter.category = { $regex: category, $options: "i" }; // Case-insensitive search
+    }
+    if (type) {
+      filter.type = type;
+    }
+
+    const listings = await Listing.find(filter);
+    if (listings.length === 0) {
       res.status(404).json({ message: "No listings found" });
       return;
     }
+
     res.status(200).json(listings);
     return;
   } catch (error) {
@@ -75,4 +87,4 @@ export const getListingById = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
     return;
   }
-}
+};
