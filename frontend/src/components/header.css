@@ -1,0 +1,25 @@
+header {
+}
+
+.header-container {
+  max-width: 1300px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.header-container ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+.header-container ul li a {
+  font-size: 20px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}

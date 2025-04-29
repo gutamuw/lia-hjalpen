@@ -11,7 +11,7 @@ interface Listing {
 interface User {
   id: number;
   name: string;
-  profileImg: string;
+  profileImage: string;
 }
 
 function Homepage() {
@@ -57,7 +57,7 @@ function Homepage() {
 
       {/* Sidebar */}
       <aside className="sidebar">
-        <img src={user.profileImg} alt="Profile" className="profile-img" />
+        <img src={user.profileImage} alt="Profile" className="profile-img" />
         <h2 className="user-name">{user.name}</h2>
         <ul className="sidebar-links">
           <li>
