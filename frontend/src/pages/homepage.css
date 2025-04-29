@@ -1,0 +1,73 @@
+.wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.homepage-container {
+  display: flex;
+  gap: 20px;
+}
+
+.main-content {
+  width: 75%;
+}
+
+.main-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.listings {
+  list-style: none;
+  padding: 0;
+}
+
+.listing-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.listing-item h3 {
+  margin: 0 0 5px;
+}
+
+.listing-item p {
+  margin: 0;
+  color: #555;
+}
+
+.sidebar {
+  width: 25%;
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.profile-img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.user-name {
+  margin: 10px 0;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-links li {
+  margin: 5px 0;
+}
+
+.sidebar-links a {
+  text-decoration: none;
+  color: #0073b1; /* LinkedIn-like blue */
+}
+
+.sidebar-links a:hover {
+  text-decoration: underline;
+}

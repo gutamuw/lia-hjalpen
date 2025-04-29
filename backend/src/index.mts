@@ -5,11 +5,13 @@ import cookieParser from "cookie-parser";
 import { listingRoutes } from "./routes/listingRoutes.mjs";
 import { userRoutes } from "./routes/userRoutes.mjs";
 import uploadRouter from "./routes/uploadRoute.mjs";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.get("/", (req, res) => {
   res.send("Hello from api!");
