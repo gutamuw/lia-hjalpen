@@ -17,7 +17,7 @@ const userSchema = new Schema<IUser>({
   password: { type: String, required: true },
   age: { type: Number, required: true },
   description: { type: String },
-  profileImage: { type: String, default: "/lia-user.jpg" },
+  profileImage: { type: String, default: "http://localhost:3000/lia-user.jpg" }, //url bör inte vara hårdkodad
   cvLink: { type: String },
   favorites: [{ type: Schema.Types.ObjectId, ref: "Listing" }],
 });

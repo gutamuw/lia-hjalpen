@@ -6,12 +6,22 @@ import { listingRoutes } from "./routes/listingRoutes.mjs";
 import { userRoutes } from "./routes/userRoutes.mjs";
 import uploadRouter from "./routes/uploadRoute.mjs";
 import cors from "cors";
+import { fileURLToPath } from "url";
+import path from "path";
+
+// Skapa __dirname för ES-moduler
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(express.urlencoded({ extended: true }));
+
+// Gör public-mappen tillgänglig för statiska filer
+app.use("/", express.static(path.join(__dirname, "../public")));
 
 app.get("/", (req, res) => {
   res.send("Hello from api!");

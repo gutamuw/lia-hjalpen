@@ -34,6 +34,9 @@ function LoginPage() {
       />
       <button onClick={handleLogin}>Login</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      <p>
+        Har du inget konto? <a href="/register">Registrera dig här</a>
+      </p>
     </div>
   );
 }
