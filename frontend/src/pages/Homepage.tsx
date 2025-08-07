@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./homepage.css"; // Import the CSS file
 import { fetchListings, fetchUser } from "../services/apiService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Listing {
   id: number;
@@ -61,13 +61,13 @@ function Homepage() {
         <h2 className="user-name">{user.name}</h2>
         <ul className="sidebar-links">
           <li>
-            <a href="/profile">Visa profil</a>
+            <Link to="/userprofile">Visa profil</Link>
           </li>
           <li>
-            <a href="/my-listings">Mina annonser</a>
+            <Link to="/my-listings">Mina annonser</Link>
           </li>
           <li>
-            <a href="/create-listing">Skapa annons</a>
+            <Link to="/create-listing">Skapa annons</Link>
           </li>
         </ul>
       </aside>

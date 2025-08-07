@@ -4,6 +4,8 @@ import Homepage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
 import RegisterUser from "./pages/RegisterUser";
+import AboutPage from "./pages/AboutPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 function App() {
   return (
@@ -13,7 +15,9 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterUser />} />
         <Route path="/homepage" element={<Homepage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<div>404 - Sidan kunde inte hittas</div>} />
+        <Route path="/userprofile" element={<UserProfilePage />} />
       </Routes>
     </Router>
   );

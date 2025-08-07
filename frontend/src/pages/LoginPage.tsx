@@ -18,7 +18,7 @@ function LoginPage() {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <h1>Login</h1>
       <input
         type="email"

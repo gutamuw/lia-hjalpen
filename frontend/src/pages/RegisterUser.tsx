@@ -26,7 +26,7 @@ function RegisterUser() {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <h1>Register User</h1>
       <form onSubmit={handleRegister}>
         <div>

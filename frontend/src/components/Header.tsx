@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./header.css";
 
 function Header() {
@@ -10,13 +11,13 @@ function Header() {
         <nav className="navbar">
           <ul className="navbar-links">
             <li>
-              <a href="/homepage">Hem</a>
+              <Link to="/homepage">Hem</Link>
             </li>
             <li>
-              <a href="/about">Om oss</a>
+              <Link to="/about">Om oss</Link>
             </li>
             <li>
-              <a href="/contact">Kontakt</a>
+              <Link to="/contact">Kontakt</Link>
             </li>
           </ul>
         </nav>

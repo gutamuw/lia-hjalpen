@@ -8,10 +8,21 @@ import uploadRouter from "./routes/uploadRoute.mjs";
 import cors from "cors";
 import { fileURLToPath } from "url";
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Skapa __dirname för ES-moduler
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+//env variabler
+const PORT = process.env.PORT || 3000;
+const MONGO_URI = process.env.MONGO_URI
+
+if (!MONGO_URI) {
+  console.error("MONGO_URI is not defined in .env file");
+  process.exit(1);
+}
 
 const app = express();
 
@@ -33,9 +44,7 @@ app.use("/users", userRoutes);
 app.use("/upload", uploadRouter);
 
 app.listen(3000, () => {
-  mongoose.connect(
-    "mongodb+srv://luddeelverskog:2QqoNXpoIMMV1Drc@cluster1.rac0iky.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1"
-  );
+  mongoose.connect(MONGO_URI);
   console.log(
     "Server is running on http://localhost:3000, connected to MongoDB"
   );
